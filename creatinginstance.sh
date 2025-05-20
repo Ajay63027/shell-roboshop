@@ -17,4 +17,5 @@ for instance in ${INSTANCES[@]}
    else
      IP=${aws ec2 describe-instances --instance-ids $INSTANCEID --query "Instances[0].PublicIpAddress" --output text}
      echo="$instance ID IP address: $IP"
+    fi
  done
