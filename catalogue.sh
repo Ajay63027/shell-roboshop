@@ -62,14 +62,14 @@ rm -rf /app/*
 cd /app 
 VALIDATE $? "moved to app folder"
 
-rm -rf 
+
 unzip /tmp/catalogue.zip &>>$logfile
 VALIDATE $? "unziping catalogue folder"
 
 npm install &>>$logfile
 VALIDATE $? "installing packages"
 
-cp $script_dir/catalogue.service.txt /etc/systemd/system/catalogue.service
+cp $script_dir/catalogue.service.repo etc/systemd/system/catalogue.service
 VALIDATE $? "creating syctlservices"
 
 systemctl daemon-reload
