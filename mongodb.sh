@@ -25,14 +25,14 @@ else
 fi
 
 VALIDATE(){
-    if [ $1 -eq 0 ]
+    if [ $1 -eq 0 ];
   then
     echo -e "$2   $G successfully $N"  | tee -a $logfile
   else 
     echo -e "$2  $R failed $N"  | tee -a $logfile
     exit 1
-  fi
-
+   fi
+}
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copied content"
 
@@ -50,5 +50,3 @@ VALIDATE $? "changing ip to 0.0.0.0"
 
 systemctl restart mongod
 VALIDATE $? "mongodb restart"
-
-
