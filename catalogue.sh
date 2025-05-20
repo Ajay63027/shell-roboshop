@@ -8,7 +8,7 @@ N="\e[0m"
 logfolder="/var/log/shell_scriptlogs"
 script_name=$(echo $0 | cut -d "." -f1)
 logfile="$logfolder/$script_name.log"
-
+script_dir=$0
 packages=("nginx" "python3" "mysql" "httpd")
 
 
@@ -34,34 +34,34 @@ VALIDATE(){
    fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$logfile
 VALIDATE $? "disabling nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$logfile
 VALIDATE $? "enabling nodejs"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$logfile
 VALIDATE $? "installing nodejs"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$logfile
 VALIDATE $? "creating a roboshop user"
 
 mkdir -p /app 
 VALIDATE $? "creating app folder"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$logfile
 VALIDATE $? "downloading catalogue"
 
 cd /app 
 VALIDATE $? "moved to app folder"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$logfile
 VALIDATE $? "unziping catalogue folder"
 
-npm install 
+npm install &>>$logfile
 VALIDATE $? "installing packages"
 
-cp catalogue.service.txt /etc/systemd/system/catalogue.service
+cp $script_dir/catalogue.service.txt /etc/systemd/system/catalogue.service
 VALIDATE $? "creating syctlservices"
 
 systemctl daemon-reload
@@ -71,12 +71,16 @@ systemctl enable catalogue
 systemctl start catalogue
 VALIDATE $? "enable and start"
 
-dnf install mongodb-mongosh -y
+cp $script_dir/mongoclient.rep /etc/yum.repos.d/mongo.repo
+
+dnf install mongodb-mongosh -y &>>$logfile
 VALIDATE $? "installing mongoclient"
 
-mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js
+mongosh --host mongodb.ajay6.space </app/db/master-data.js
 
 VALIDATE $? "loading data"
+
+
 
 
 
