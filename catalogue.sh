@@ -8,7 +8,7 @@ N="\e[0m"
 logfolder="/var/log/shell_scriptlogs"
 script_name=$(echo $0 | cut -d "." -f1)
 logfile="$logfolder/$script_name.log"
-script_dir=$0
+script_dir=$PWD
 packages=("nginx" "python3" "mysql" "httpd")
 
 
