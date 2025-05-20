@@ -14,6 +14,6 @@ for instance in ${INSTANCES[@]}
      IP=$(aws ec2 describe-instances --instance-ids $INSTANCEID --query "Instances[0].PrivateIpAddress" --output text)
    else
      IP=$(aws ec2 describe-instances --instance-ids $INSTANCEID --query "Instances[0].PublicIpAddress" --output text)
-     echo="$instance ID IP address: $IP"
    fi
+   echo="$instance ID IP address: $IP"
  done
