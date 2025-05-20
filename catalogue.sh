@@ -84,8 +84,12 @@ cp $script_dir/mongoclient.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y &>>$logfile
 VALIDATE $? "installing mongoclient"
 
+STATUS=$(mongosh --host mongodb.ajay6.space --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet)
+if [ STATUS -lt 0 ];then
 mongosh --host mongodb.ajay6.space </app/db/master-data.js &>>$logfile
-
+else
+echo -e "already data existed $Y SKIP THIS PART $N"
+fi
 VALIDATE $? "loading data" 
 
 
