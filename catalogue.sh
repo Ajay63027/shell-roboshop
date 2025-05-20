@@ -79,14 +79,14 @@ systemctl enable catalogue
 systemctl start catalogue
 VALIDATE $? "enable and start"
 
-cp $script_dir/mongoclient.rep /etc/yum.repos.d/mongo.repo
+cp $script_dir/mongoclient.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y &>>$logfile
 VALIDATE $? "installing mongoclient"
 
-mongosh --host mongodb.ajay6.space </app/db/master-data.js
+mongosh --host mongodb.ajay6.space </app/db/master-data.js &>>$logfile
 
-VALIDATE $? "loading data"
+VALIDATE $? "loading data" 
 
 
 
