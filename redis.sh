@@ -50,3 +50,6 @@ VALIDATE $? "opening ip to all and chnaging protected mode"
 systemctl enable redis 
 systemctl start redis 
 VALIDATE $? "enabling and starting redis"
+END_TIME=$(date +%s)
+TOTAL_TIME=($START_TIME-$END_TIME)
+echo "total time taken : $TOTAL_TIME seconds"
