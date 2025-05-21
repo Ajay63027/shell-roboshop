@@ -9,7 +9,6 @@ logfolder="/var/log/shell_scriptlogs"
 script_name=$(echo $0 | cut -d "." -f1)
 logfile="$logfolder/$script_name.log"
 script_dir=$PWD
-packages=("nginx" "python3" "mysql" "httpd")
 
 
 mkdir -p $logfolder
@@ -45,10 +44,6 @@ VALIDATE $? "eabling nginx:1.24"
 dnf install nginx -y &>>$logfile
 VALIDATE $? "installing nginx"
 
-systemctl enable nginx 
-VALIDATE $? "enable "
-systemctl start nginx 
-VALIDATE $? " start"
 
 rm -rf /usr/share/nginx/html/* &>>$logfile
 VALIDATE $? "removing default html"
