@@ -33,41 +33,41 @@ VALIDATE(){
     exit 1
    fi
 }
-dnf module list nginx 
+dnf module list nginx &>>$logfile
 VALIDATE $? "module list"
 
-dnf module disable nginx -y
+dnf module disable nginx -y &>>$logfile
 VALIDATE $? "disabling nginx"
 
-dnf module enable nginx:1.24 -y
+dnf module enable nginx:1.24 -y &>>$logfile
 VALIDATE $? "eabling nginx:1.24"
 
-dnf install nginx -y
+dnf install nginx -y &>>$logfile
 VALIDATE $? "installing nginx"
 
 systemctl enable nginx 
 systemctl start nginx 
 VALIDATE $? "enable and start"
 
-rm -rf /usr/share/nginx/html/* 
+rm -rf /usr/share/nginx/html/* &>>$logfile
 VALIDATE $? "removing default html"
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$logfile
 VALIDATE $? "downloading frontend file"
 
-cd /usr/share/nginx/html 
+cd /usr/share/nginx/html &>>$logfile
 VALIDATE $? "moving to html folder"
 
-unzip /tmp/frontend.zip
-VALIDATE $? "unziping frontend file"
+unzip /tmp/frontend.zip &>>$logfile
+VALIDATE $? "unziping frontend file"  &>>$logfile
 
-rm -rf /etc/nginx/nginx.conf
+rm -rf /etc/nginx/nginx.conf  &>>$logfile
 VALIDATE $? "removing default nginx"
 
-cp $script_dir/nginx.conf /etc/nginx/nginx.conf
+cp $script_dir/nginx.conf /etc/nginx/nginx.conf  &>>$logfile
 VALIDATE $? "copying nginx file"
 
-systemctl restart nginx 
+systemctl restart nginx  &>>$logfile
 VALIDATE $? "nginx restart"
 
 
