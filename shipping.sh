@@ -59,7 +59,7 @@ VALIDATE $? "downloading shipping content"
 cd /app 
 VALIDATE $? "moving to app folder"
 
-
+rm -rf /app/*
 unzip /tmp/shipping.zip &>>$logfile
 VALIDATE $? "unzipping shipping file "
 
