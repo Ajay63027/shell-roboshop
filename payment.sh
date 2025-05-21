@@ -25,8 +25,7 @@ then
 else
   echo "user  have permissions to install" &>>$logfile
 fi
-echo "please enter rabbitmq user password"
-read -s rabbitmq_PASSWD
+
 
 VALIDATE(){
     if [ $1 -eq 0 ];
