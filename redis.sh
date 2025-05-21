@@ -51,5 +51,5 @@ systemctl enable redis
 systemctl start redis 
 VALIDATE $? "enabling and starting redis"
 END_TIME=$(date +%s)
-TOTAL_TIME=$(( $START_TIME - $END_TIME ))
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
 echo "total time taken : $TOTAL_TIME seconds"
