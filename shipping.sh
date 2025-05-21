@@ -41,8 +41,14 @@ VALIDATE(){
 dnf install maven -y &>>$logfile
 VALIDATE $? "installing maven and java"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE $? "creating roboshop user"
+id roboshop
+if [ $? -ne 0 ];
+then
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$logfile
+VALIDATE $? "creating a roboshop user"
+else 
+echo -e "user already exist $Y Skipping this part $N"
+fi
 
 mkdir /app 
 VALIDATE $? "creating app folder"
