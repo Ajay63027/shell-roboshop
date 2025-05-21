@@ -70,7 +70,6 @@ mv target/shipping-1.0.jar shipping.jar &>>$logfile
 VALIDATE $? "moving and renaming jar file"
 
 cp $script_dir/shipping.service /etc/systemd/system/shipping.service &>>$logfile
-sudo systemctl unmask shipping.service
 
 systemctl daemon-reload
 VALIDATE $? "deamon-reload "
